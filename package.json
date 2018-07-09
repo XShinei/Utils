@@ -1,0 +1,9 @@
+{
+  "name": "utils",
+  "version": "1.0.0",
+  "description": "Personal tool class functions",
+  "main": "index.js",
+  "repository": "https://github.com/XShinei/Utils.git",
+  "author": "xshinei",
+  "license": "MIT"
+}
