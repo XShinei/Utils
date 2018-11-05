@@ -81,3 +81,7 @@ function debounce(fn, delay, immediate) {
         return result;
     };
 }
+
+/**
+ *  return Promise
+ */
