@@ -32,14 +32,13 @@ function debounce(fn, delay, immediate) {
         timer && clearTimeout(timer);
 
         if(immediate) {
-            if (timer) {
-                timer = setTimeout(() => {
-                    timer = null;
-                }, delay);
-            }
-            else {
-                fn.apply(context, args);
-            }
+            const doNow = !timer;
+
+            timer = setTimeout(() => {
+                timer = null;
+            }, delay);
+
+            doNow && fn.apply(context, args);
         }
         else {
             timer = setTimeout(() => {
@@ -63,14 +62,15 @@ function debounce(fn, delay, immediate) {
         timer && clearTimeout(timer);
 
         if (immediate) {
-            if (timer) {
-                timer = setTimeout(() => {
-                    timer = null;
-                }, delay);
-            }
-            else {
+            const doNow = !timer;
+
+            timer = setTimeout(() => {
+                timer = null;
+            }, delay);
+            
+            if (doNow) {
                 result = fn.apply(context, args);
-            }
+            } 
         }
         else {
             timer = setTimeout(() => {
