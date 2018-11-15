@@ -112,3 +112,62 @@ function debounce(fn, delay, immediate) {
         });
     };
 }
+
+/**
+ *  base timestamp
+ */
+function throttle(fn, delay) {
+    let last = 0;
+
+    return function() {
+        const context = this;
+        const args = arguments;
+
+        const now = +new Date();
+        const offset = now - last;
+
+        if (offset > delay) {
+            last = now;
+            fn.apply(context, args);
+        }
+    };
+}
+
+/**
+ *  return value
+ */
+function throttle(fn, delay) {
+    let last = 0;
+
+    return function() {
+        const context = this;
+        const args = arguments;
+
+        const now = +new Date();
+        const offset = now - last;
+
+        if (offset > delay) {
+            last = now;
+            return fn.apply(context, args);
+        }
+    };
+}
+
+/**
+ *  base setTimeout
+ */
+function throttle(fn, delay) {
+    let timer = null;
+
+    return function() {
+        const context = this;
+        const args = arguments;
+
+        if (!timer) {
+            timer = setTimeout(() => {
+                fn.apply(context, args);
+                timer = null;
+            }, delay);
+        }
+    };
+}
