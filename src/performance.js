@@ -171,3 +171,71 @@ function throttle(fn, delay) {
         }
     };
 }
+
+/**
+ *  mixin timestamp setTimeout
+ */
+function throttle(fn, delay) {
+    let last = 0;
+    let timer = null;
+
+    return function() {
+        const context = this;
+        const args = arguments;
+
+        const now = +new Date();
+        const offset = now - last;
+
+        if (offset > delay) {
+            if (timer) {
+                clearTimeout(timer);
+                timer = null;
+            }
+
+            last = now;
+            fn.apply(context, args);
+        }
+        else if (!timer) {
+            timer = setTimeout(() => {
+                last = +new Date();
+                timer = null;
+                fn.apply(context, args);
+            }, delay - offset);
+        }
+    };
+}
+
+function throttle(fn, delay, options = {}) {
+    let timer = null;
+    let last = 0;
+
+    return function() {
+        const context = this;
+        const args = arguments;
+
+        const now = +new Date();
+        
+        if (last === 0 && options.immediate === false) {
+            last = now;
+        }
+
+        const offset = now - last;
+
+        if (offset > delay) {
+            if (timer) {
+                clearTimeout(timer);
+                timer = null;
+            }
+
+            last = now;
+            fn.apply(context, args);
+        }
+        else if (!timer && options.trailing !== false) {
+            timer = setTimeout(() => {
+                now = +new Date();
+                timer = null;
+                fn.apply(context, args);
+            }, delay - offset);
+        }
+    };
+}
