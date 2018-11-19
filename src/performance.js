@@ -197,7 +197,7 @@ function throttle(fn, delay) {
         }
         else if (!timer) {
             timer = setTimeout(() => {
-                last = +new Date();
+                last = options.immediate === false ? 0 : +new Date();
                 timer = null;
                 fn.apply(context, args);
             }, delay - offset);
@@ -205,6 +205,9 @@ function throttle(fn, delay) {
     };
 }
 
+/**
+ *  config immediate trailing
+ */
 function throttle(fn, delay, options = {}) {
     let timer = null;
     let last = 0;
@@ -232,7 +235,7 @@ function throttle(fn, delay, options = {}) {
         }
         else if (!timer && options.trailing !== false) {
             timer = setTimeout(() => {
-                now = +new Date();
+                last = options.immediate === false ? 0 : +new Date();
                 timer = null;
                 fn.apply(context, args);
             }, delay - offset);
